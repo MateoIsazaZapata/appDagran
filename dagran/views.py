@@ -66,13 +66,11 @@ def dashboard(request):
             subject='🚨 NUEVA ALERTA RIESGO DE DESASTRE NATURAL 🚨',
             body='Este correo requiere un cliente compatible con HTML.',
             from_email=os.environ.get('EMAIL_HOST_USER'),
-            # to=['mathiwisaza@gmail.com']
-            to=['mathiwisaza@gmail.com', 'castroyeidys@gmail.com']
+            to= os.environ.get('SMTP_EMAIL_TO_SEND')
         )
         email.attach_alternative(html_content, 'text/html')
         
-# 'gil.anasofiaarenas123@gmail.com'
-
+        
         # Enviar correo
         try:
             email.send()

@@ -12,16 +12,19 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Cargar .env para comunicar el archivo de variables de entorno 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(+(r7^504x_zyiu)2fu60810q_$di_ci)eboa0^&1v10)q)o*d'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,27 +81,13 @@ WSGI_APPLICATION = 'backDagran.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dagran',
-        'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
-
-#postgress render remoto
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'redan_database',
-#         'USER': 'redan_database_user',
-#         'PASSWORD': '9n3FeemyxU5pYDijQKOPqZZDfbYlslrY',
-#         'HOST': 'dpg-d4719uripnbc73f85rt0-a.oregon-postgres.render.com',
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'sslmode': 'require',
-#     }
-# }}
 
 
 # Password validation
@@ -149,10 +138,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # GESTOR DE ENVIO DE CORREO ELECTRONICO
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'reportedealertasredan@gmail.com'
-EMAIL_HOST_PASSWORD = 'uuzv yvvz prul thwq'  # Contraseña de aplicación de Google
+EMAIL_PORT = os.environ.get('SMTP_EMAIL_PORT')
+EMAIL_USE_TLS = os.environ.get('SMTP_EMAIL_USE_TLS')
+EMAIL_HOST_USER = os.environ.get('SMTP_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('SMTP_EMAIL_HOST_PASSWORD')
 
 # LIMITE DE TIEMPO DE LOGIN
 SESSION_COOKIE_AGE = 300
